@@ -574,20 +574,14 @@ class Test(dict):
             tag = f"{tag}-{ray_version}"
         return tag
 
-    def use_byod_ml_image(self) -> bool:
-        """Returns whether to use the ML image for this test."""
-        return self.get_byod_type() == "gpu"
-
-    def use_byod_llm_image(self) -> bool:
-        return self.get_byod_type().startswith("llm-")
-
     def get_byod_repo(self) -> str:
         """
         Returns the byod repo to use for this test.
         """
-        if self.use_byod_ml_image():
+        byod_type = self.get_byod_type()
+        if byod_type == "gpu":
             return DATAPLANE_ECR_ML_REPO
-        if self.use_byod_llm_image():
+        if byod_type.startswith("llm-"):
             return DATAPLANE_ECR_LLM_REPO
         return DATAPLANE_ECR_REPO
 
@@ -595,14 +589,15 @@ class Test(dict):
         """
         Returns the anyscale byod ecr to use for this test.
         """
+        global_config = get_global_config()
         if self.is_gce() or self.is_kuberay():
-            return get_global_config()["byod_gcp_cr"]
+            return global_config["byod_gcp_cr"]
         if self.is_azure():
-            return get_global_config()["byod_azure_cr"]
-        byod_ecr = get_global_config()["byod_aws_cr"]
+            return global_config["byod_azure_cr"]
+        byod_ecr = global_config["byod_aws_cr"]
         if byod_ecr:
             return byod_ecr
-        return get_global_config()["byod_ecr"]
+        return global_config["byod_ecr"]
 
     def get_anyscale_base_byod_image(self, build_id: Optional[str] = None) -> str:
         """
