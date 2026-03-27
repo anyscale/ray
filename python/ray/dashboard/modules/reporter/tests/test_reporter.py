@@ -331,13 +331,15 @@ def test_report_stats(tmp_path):
         print(record.gauge.name)
         print(record)
     assert len(records) == 41
-    # Verify RayNodeType and IsHeadNode tags
+    # Verify RayNodeType, IsHeadNode, and NodeId tags
     for record in records:
         if record.gauge.name.startswith("node_"):
             assert "RayNodeType" in record.tags
             assert record.tags["RayNodeType"] == "head"
             assert "IsHeadNode" in record.tags
             assert record.tags["IsHeadNode"] == "true"
+            assert "NodeId" in record.tags
+            assert record.tags["NodeId"] == dashboard_agent.node_id
     # Test stats without raylets
     stats["raylet"] = None
     records = agent._to_records(stats, cluster_stats)

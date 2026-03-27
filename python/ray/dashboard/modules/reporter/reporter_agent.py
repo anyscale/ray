@@ -1417,7 +1417,13 @@ class ReporterAgent(
 
         # Common tags for node-level metrics
         # We use RayNodeType to mark head/worker node, IsHeadNode is retained for backward compatibility
-        node_tags = {"ip": ip, "RayNodeType": ray_node_type, "IsHeadNode": is_head_node}
+        node_id = self._dashboard_agent.node_id
+        node_tags = {
+            "ip": ip,
+            "NodeId": node_id,
+            "RayNodeType": ray_node_type,
+            "IsHeadNode": is_head_node,
+        }
 
         # -- Instance count of cluster --
         # Only report cluster stats on head node

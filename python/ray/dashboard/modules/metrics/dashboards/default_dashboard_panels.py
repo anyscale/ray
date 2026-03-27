@@ -3,8 +3,10 @@
 from ray.dashboard.modules.metrics.dashboards.common import (
     DashboardConfig,
     Panel,
+    PanelTemplate,
     Row,
     Target,
+    TargetTemplate,
 )
 
 """
@@ -111,6 +113,20 @@ OVERVIEW_AND_HEALTH_PANELS = [
                 legend="OOM Killed: {{Name}}, {{instance}}",
             ),
         ],
+    ),
+    Panel(
+        id=65,
+        title="Workload Instances",
+        description="Table showing all Ray nodes with their Node ID and IP address.",
+        unit="short",
+        targets=[
+            Target(
+                expr='max by (NodeId, ip, RayNodeType) (ray_node_cpu_utilization{{instance=~"$Instance",{global_filters}}}) * 0 + 1',
+                legend="{{NodeId}}",
+                template=TargetTemplate.GRAPH,
+            ),
+        ],
+        template=PanelTemplate.TABLE,
     ),
 ]
 
