@@ -473,7 +473,7 @@ TASK_SUBMISSION_BACKPRESSURE_PANEL = Panel(
         )
     ],
     fill=0,
-    stack=True,
+    stack=False,
 )
 
 # Task Completion Time Percentiles
@@ -719,7 +719,7 @@ INTERNAL_INQUEUE_BYTES_PANEL = Panel(
             legend="Bytes Size: {{dataset}}, {{operator}}",
         )
     ],
-    fill=0,
+    fill=2,
     stack=True,
 )
 
@@ -749,7 +749,7 @@ INTERNAL_OUTQUEUE_BYTES_PANEL = Panel(
             legend="Bytes Size: {{dataset}}, {{operator}}",
         )
     ],
-    fill=0,
+    fill=2,
     stack=True,
 )
 
@@ -855,7 +855,7 @@ PENDING_TASK_INPUTS_PANEL = Panel(
             legend="Bytes Size: {{dataset}}, {{operator}}",
         )
     ],
-    fill=0,
+    fill=2,
     stack=True,
 )
 
@@ -870,7 +870,7 @@ FREED_MEMORY_PANEL = Panel(
             legend="Bytes Size: {{dataset}}, {{operator}}",
         )
     ],
-    fill=0,
+    fill=2,
     stack=True,
 )
 
@@ -885,7 +885,7 @@ SPILLED_MEMORY_PANEL = Panel(
             legend="Bytes Size: {{dataset}}, {{operator}}",
         )
     ],
-    fill=0,
+    fill=2,
     stack=True,
 )
 
